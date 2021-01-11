@@ -1,0 +1,27 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+bases:
+- ../../helm_base
+
+namespace: 2048-app-dev
+commonLabels:
+  app.kubernetes.io/part-of: argocd-app-of-apps-example
+  app.kubernetes.io/managed-by: argocd
+
+
+resources:
+  - namespace.yml
+
+images:
+- name: blah-blah:blah
+  newName: alexwhen/docker-2048
+  newTag: latest
+
+patchesJson6902:
+- target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: deployment
+  path: patch/deployment_patch.yml

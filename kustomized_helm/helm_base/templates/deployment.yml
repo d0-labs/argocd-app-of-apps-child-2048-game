@@ -1,0 +1,26 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: 2048-app
+  template:
+    metadata:
+      labels:
+        app: 2048-app
+    spec:
+      containers:
+      - name: 2048-app
+        # Replace with your docker registry info
+        image: alexwhen/docker-2048
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: "0.1"
+            memory: 100Mi
